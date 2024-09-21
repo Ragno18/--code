@@ -1,0 +1,72 @@
+#corrected k-means
+#input1={−1,27,31,2,59,3,61,34,0,12}
+#input2={1,1,1,2,2,2,3,3,3,1}
+#d=dictionary
+#dis=distance between points
+#enter list of 1D points
+#i1 = list(map(int,input().replace(chr(150),str(chr(45))).split()))
+i1=[]
+for i in range(10):
+    i1.append(int(input()))
+print(i1)
+#enter list of label of classes for each point
+i2=list(map(int,input().split()))
+d={}
+for i in range(len(i1)):
+    d[i1[i]]=i2[i]
+
+    
+def K_means_for_n_iterations(n):
+    for i in range(n):
+        c=1
+        #i need one more input for number of clusters
+        m={}
+        m1=0
+        ce=0
+        s=set(i2)
+        print()
+        for i in s:
+            for j in d:
+                if d[j]==i:
+                    m1+=j
+                    ce+=1
+            print("mean\tno of data points belongng to the class")
+            print(m1,ce)
+            if ce==0:
+                print(mprev)
+                m[i]=mprev[i]
+            else:
+                avg=m1/ce
+                m[i]=avg
+            ce=0
+            m1=0
+            avg=0
+
+        print("dictionary of means\n",m)
+        dist=[]
+        dis=[]
+        checking_min_of_dis=0
+        req_clss=0
+        d_updated={}
+        print()
+        print()
+        #checking distance between each point and the mean
+        print("distance between each point and the mean and assigning to class with minimum distance")
+        for i in d:
+            for j in m:
+                dis.append(abs(m[j]-i))
+            print(dis)
+            req_clss=dis.index(min(dis))
+            #print(f"minimum of distance for {i} point")
+            #print(min(dis))
+            #print(dis.index(min(dis)))
+            d_updated[i]=req_clss+1
+            dis=[]
+            
+        print(m)
+        mprev=m
+        print(d_updated)
+        d.update(d_updated)
+        
+K_means_for_n_iterations(3)         
+            
