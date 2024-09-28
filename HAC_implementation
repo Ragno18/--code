@@ -1,0 +1,143 @@
+'''If we utilize the Hierarchical Agglomerative Clustering method on given
+below data with the aim of identifying clusters based on the smallest
+values obtained from Euclidean distance calculations, the dendrogram will be -
+'''
+'''point x coordinate y coordinate
+p1 0.4005 0.5306
+p2 0.2148 0.3854
+p3 0.3457 0.3156
+p4 0.2652 0.1875
+p5 0.0789 0.4139
+p6 0.4548 0.3022
+Table: X-Y coordinates of six points.
+p1 p2 p3 p4 p5 p6
+p1 0.0000 0.2357 0.2218 0.3688 0.3421 0.2347
+p2 0.2357 0.0000 0.1483 0.2042 0.1388 0.2540
+p3 0.2218 0.1483 0.0000 0.1513 0.2843 0.1100
+p4 0.3688 0.2042 0.1513 0.0000 0.2932 0.2216
+p5 0.3421 0.1388 0.2843 0.2932 0.0000 0.3921
+p6 0.2347 0.2540 0.1100 0.2216 0.3921 0.0000
+Table: Distance Matrix for Six Points'''
+import math
+from matplotlib import pyplot as plt 
+import pandas as pd
+from scipy.cluster.hierarchy import dendrogram, linkage
+'''#accepting datapoints
+print("Enter the number of points")
+n=int(input())
+d={}
+for i in range(n):
+    x,y=map(float,input().split())
+    d[(x,y)]=i+1
+#creating distance matrix
+dist=[]
+row=[]
+for i in d:
+    #point under consideration i
+    for j in d:
+        #calculating distance between i and j
+        di=math.sqrt(math.pow(i[0]-j[0],2)+math.pow(i[1]-j[1],2))
+        row.append(di)
+    dist.append(row)
+    row=[]
+#find minimum of distances and delete the row and column
+'''
+dend=["A","B","C","D","E","F"]
+dend_edit=[["A",],["B",],["C",],["D",],["E",],["F",]]
+nop=6
+dist=[[0.0, 0.23572766065949918, 0.22187392816642515, 0.36881390971599753, 0.3421190582238879, 0.23476594727515313], [0.23572766065949918, 0.0, 0.1483470592900311, 0.20421696795320415, 0.1388562566109284, 0.2540122831675665], [0.22187392816642515, 0.1483470592900311, 0.0, 0.15129395229155726, 0.28433278038242443, 0.10991983442491166], [0.36881390971599753, 0.20421696795320415, 0.15129395229155726, 0.0, 0.29319728852770793, 0.2215947878448408], [0.3421190582238879, 0.1388562566109284, 0.28433278038242443, 0.29319728852770793, 0.0, 0.39214499869308544], [0.23476594727515313, 0.2540122831675665, 0.10991983442491166, 0.2215947878448408, 0.39214499869308544, 0.0]]
+dmin=0
+hacl=[]
+dist1=[]
+for i in dist:
+    ind=i.index(0.0)
+    i.remove(0.0)
+    i.insert(ind,100000000)
+    dist1.append(i)
+dist=dist1
+print(dist)     
+q=[]
+row=[]
+c=1
+c1=0
+dist_updated=[]
+while len(dist)!=1:
+    print(f"iteration no:{c}")
+    #finding the minimum in the entire matrix
+    #print("\n\n",min(dist))
+    
+    for i in dist:
+        print(i,end="\n")
+    print(min(dist))
+    print(min(min(dist)))
+    #assigning the id1,id2 for the min value
+    id1=dist.index(min(dist))#id1=2
+    id2=min(dist).index(min(min(dist)))#id2=3
+    print(id1,id2)
+    #erasing the id1+1th row and id2+1th column and make the dendogram tuple
+    '''if id1==nop-1 or id2==nop-1 :
+        if id1==nop-1 and id2!=nop-1:
+            dist_updated=dist[:][0:id2+1]+dist[:][id2+2:]
+        elif id2==nop-1 and id1!=nop-1:
+            dist_updated=dist[0:id1+1][:]+dist[id1+2:][:]
+        else:
+            dist_updated=dist[:][:]
+        #special case i will deal with this at the end
+    else:
+        dist_updated=dist[0:id1+1][0:id2+1]+dist[id1+2:][id2+2:]'''
+    #check which is greater id1 or id2 and remove the row and column of the larger entity
+    if id2>id1:
+        row=[]
+        
+        for i in dist:
+            if dist.index(i)!=id2:
+                for j in i:
+                    if i.index(j)!=id2:
+                        row.append(j)
+                        #print(c1)
+                        #print("reached here")
+                        c1+=1
+            if row==[]:
+                continue
+            else:
+                dist_updated.append(row)
+            row=[]
+        dend_edit[id1].append(dend_edit[id2])
+        dend_edit.remove(dend_edit[id2])
+        
+            
+    else:
+        row=[]
+        
+        for i in dist:
+            if dist.index(i)!=id1:
+                for j in i:
+                    if i.index(j)!=id1:
+                        row.append(j)
+                        #print(c1)
+                        #print("reached here")
+                        c1+=1
+            if row==[]:
+                continue
+            else:
+                dist_updated.append(row)
+            row=[]
+        dend_edit[id2].append(dend_edit[id1])
+        dend_edit.remove(dend_edit[id1])
+        
+    print("-----------------------------------------")
+    print("dist_updated")
+    for i in dist_updated:
+        print(i,end="\n")
+    tup=(id1+1,id2+1)
+    hacl.append(tup)
+    print(hacl)
+    print("dendogram=",dend_edit)
+    dist=dist_updated
+    
+    c+=1
+    print("\n\n")
+    dist_updated=[]
+        
+         
+#[[3, 6], [2, [5]], [4, 1]]
