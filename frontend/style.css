@@ -1,0 +1,23 @@
+/* Basic styling */
+body {
+    font-family: sans-serif;
+    padding: 2em;
+}
+
+#filters {
+    margin-bottom: 1em;
+}
+
+#results table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#results th, #results td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#results th {
+    background-color: #f2f2f2;
+}

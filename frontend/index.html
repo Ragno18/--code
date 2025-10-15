@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Analyser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Stock Analyser</h1>
+    <div id="filters">
+        <label for="min_price">Min Price:</label>
+        <input type="number" id="min_price" name="min_price" value="0">
+        <label for="max_price">Max Price:</label>
+        <input type="number" id="max_price" name="max_price" value="10000">
+    </div>
+    <button id="analyse-btn">Analyse</button>
+    <div id="results">
+        <table>
+            <thead>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="stock-table-body">
+                <!-- Stock data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
